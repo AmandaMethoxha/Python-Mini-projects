@@ -1,41 +1,42 @@
-# generate a bunch of random math questions, ask the user and dont move to the next question without the right answer.
-# time how long it takes the user to answer the questions
+import random, time, operator
 
-import random
-import time
-OPERATORS = ["+", "-", "*"]   # string with python operators
-MIN_OPERAND = 3
-MAX_OPERAND = 12
+OPS = {"+": operator.add, "-": operator.sub, "*": operator.mul}
+MIN_OPERAND, MAX_OPERAND = 3, 12
 TOTAL_PROBLEMS = 10
 
 def generate_problem():
-    left = random.randint(MIN_OPERAND, MAX_OPERAND)
-    right = random.randint(MIN_OPERAND, MAX_OPERAND)
-    operator = random.choice(OPERATORS)
+    a = random.randint(MIN_OPERAND, MAX_OPERAND)
+    b = random.randint(MIN_OPERAND, MAX_OPERAND)
+    op = random.choice(tuple(OPS.keys()))
+    return f"{a} {op} {b}", OPS[op](a, b)
 
-    expr = str(left) + " " + operator + " " + str(right)
-    answer = eval(expr)
-    return expr, answer
+def main():
+    wrong = 0
+    input("press enter to start!")
+    print("-------------")
+    start = time.time()
 
-#expr, answer = generate_problem()
-#print(expr,answer)
+    for i in range(TOTAL_PROBLEMS):
+        expr, answer = generate_problem()
+        while True:
+            guess = input(f"Problem nr #{i+1}: {expr} = ").strip()
+            if guess == str(answer):
+                break
+            if guess == "":
+                print("Please enter a number.")
+                continue
+            # optional: allow accidental non-numeric entries without crashing
+            if not guess.lstrip("-").isdigit():
+                print("Numbers only, try again.")
+                wrong += 1
+                continue
+            wrong += 1
 
-wrong = 0
-input ("press enter to start!")
-print("-------------")
+    total = time.time() - start
+    print("-------------")
+    avg = total / TOTAL_PROBLEMS
+    print(f"Nice work! You finished in {total:.2f} seconds.")
+    print(f"Wrong attempts: {wrong} | Avg time/question: {avg:.2f}s")
 
-start_time = time.time()
-
-for i in range(TOTAL_PROBLEMS):
-    expr, answer = generate_problem()
-    while True:
-        guess = input("Problem nr #" + str(i+1) + ": " + expr + " = ")
-        if guess == str(answer):
-            break
-        wrong += 1
-
-end_time = time.time()
-total_time = end_time - start_time
-
-print("-------------")
-print("Nice work!You finished in", total_time, "seconds!")
+if __name__ == "__main__":
+    main()
