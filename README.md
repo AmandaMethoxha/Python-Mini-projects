@@ -1,4 +1,23 @@
-# Mini python projects
-This mini projects i have created while practicing my python skills and i have created mini games. 
+# Python Mini Projects
 
-Pig game is one of the mini projects that i have created. this game is played between a number of players decided by owner with a dice and the player that hits first the max number wins the game.
+A tidy collection of small Python console apps. Each project lives in `/projects/<name>` with its own README and run instructions.
+
+## Projects
+- **Math Quiz** — timed arithmetic quiz that blocks until correct  
+  `projects/math-quiz/`
+- **MadLib Generator** — fill placeholders in `story.txt`  
+  `projects/madlib-generator/`
+- **Number Guesser** — guess the number with attempt counter  
+  `projects/number-guesser/`
+- **Pig Game** — 2–4 player dice game, first to 50 wins  
+  `projects/pig-game/`
+- **Quiz Game** — quick computer-parts quiz  
+  `projects/quiz-game/`
+
+## How to run any project
+```bash
+cd projects/<project-name>
+python3 <main-file>.py
+
+## Requirements
+Python 3.8+ (no external deps for these CLI projects).
